@@ -1,0 +1,2100 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigitalMoney- Investimento</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: #4cd964;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-info span {
+            margin-right: 15px;
+            font-weight: 500;
+        }
+        
+        .btn {
+            background-color: #4cd964;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #3ac454;
+        }
+        
+        .btn-logout {
+            background-color: #ff3b30;
+        }
+        
+        .btn-logout:hover {
+            background-color: #e0352b;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        /* Auth Screens */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+        }
+        
+        .auth-box {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+        }
+        
+        .auth-box h2 {
+            margin-bottom: 25px;
+            color: #1e3c72;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #2a5298;
+        }
+        
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #777;
+            transition: all 0.3s;
+        }
+        
+        .auth-tab.active {
+            color: #2a5298;
+            border-bottom: 3px solid #2a5298;
+        }
+        
+        .auth-form {
+            display: none;
+        }
+        
+        .auth-form.active {
+            display: block;
+        }
+        
+        /* Dashboard */
+        .dashboard-section {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #1e3c72;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+        }
+        
+        /* Wallet */
+        .wallet-balance {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .balance-amount {
+            font-size: 48px;
+            font-weight: 700;
+            margin: 15px 0;
+        }
+        
+        /* Mining Plans */
+        .mining-plans {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .plan-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eee;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .plan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .plan-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .plan-price {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1e3c72;
+        }
+        
+        .plan-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+        
+        .plan-features li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .plan-features li i {
+            color: #4cd964;
+            margin-right: 10px;
+        }
+        
+        /* Transactions */
+        .transactions-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .transactions-table th, .transactions-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .transactions-table th {
+            background-color: #f9f9f9;
+            font-weight: 600;
+            color: #1e3c72;
+        }
+        
+        .status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .status.completed {
+            background-color: rgba(76, 217, 100, 0.2);
+            color: #3ac454;
+        }
+        
+        .status.pending {
+            background-color: rgba(255, 149, 0, 0.2);
+            color: #ff9500;
+        }
+        
+        /* Deposit/Withdrawal Forms */
+        .payment-methods {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .payment-method {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            border: 2px solid #eee;
+            margin-right: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .payment-method:last-child {
+            margin-right: 0;
+        }
+        
+        .payment-method.active {
+            border-color: #2a5298;
+            background-color: rgba(42, 82, 152, 0.05);
+        }
+        
+        .payment-method i {
+            font-size: 30px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        /* WhatsApp Button */
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+            z-index: 1000;
+            transition: transform 0.3s;
+            text-decoration: none;
+        }
+        
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1e3c72;
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+        }
+        
+        .footer-section ul li a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        /* NEW: Deposit Control Switch */
+        .deposit-control {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            z-index: 999;
+            background: white;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .control-toggle {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border-radius: 50px;
+            transition: all 0.4s;
+        }
+        
+        .control-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(42, 82, 152, 0.3);
+        }
+        
+        .control-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+        
+        .control-text {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .control-status {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: 3px;
+        }
+        
+        .control-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: white;
+            border-radius: 0 0 20px 20px;
+        }
+        
+        .control-panel.open {
+            max-height: 300px;
+        }
+        
+        .control-content {
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .control-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e3c72;
+            margin-bottom: 15px;
+        }
+        
+        .control-description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        /* Switch Button */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 70px;
+            height: 34px;
+            margin: 10px 0;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        input:checked + .slider {
+            background: linear-gradient(135deg, #4cd964 0%, #3ac454 100%);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(36px);
+        }
+        
+        .slider:after {
+            position: absolute;
+            content: "OFF";
+            color: white;
+            font-weight: bold;
+            font-size: 10px;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            transition: all 0.3s;
+        }
+        
+        input:checked + .slider:after {
+            content: "ON";
+            right: auto;
+            left: 10px;
+        }
+        
+        .switch-label {
+            display: block;
+            margin-top: 10px;
+            font-weight: 600;
+            color: #1e3c72;
+        }
+        
+        .deposit-disabled {
+            position: relative;
+            opacity: 0.6;
+            pointer-events: none;
+            user-select: none;
+        }
+        
+        .deposit-disabled-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+        
+        .deposit-disabled-icon {
+            font-size: 48px;
+            color: #ff3b30;
+            margin-bottom: 15px;
+            animation: pulse 2s infinite;
+        }
+        
+        .deposit-disabled-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ff3b30;
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Control Panel Animation */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .control-panel.open .control-content {
+            animation: slideDown 0.5s ease-out;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .deposit-control {
+                top: 80px;
+                right: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+            }
+            
+            nav ul li {
+                margin-left: 15px;
+            }
+            
+            .mining-plans {
+                grid-template-columns: 1fr;
+            }
+            
+            .payment-methods {
+                flex-direction: column;
+            }
+            
+            .payment-method {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            .deposit-control {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin: 0 auto 25px;
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/258846678415" target="_blank" class="whatsapp-btn">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- NEW: Deposit Control Panel -->
+    <div class="deposit-control" id="depositControl">
+        <div class="control-toggle" id="controlToggle">
+            <div class="control-icon">
+                <i class="fas fa-cogs"></i>
+            </div>
+            <div class="control-text">
+                Controle de Depósitos
+                <div class="control-status" id="controlStatus">Ativo</div>
+            </div>
+        </div>
+        <div class="control-panel" id="controlPanel">
+            <div class="control-content">
+                <div class="control-title">Controle de Sistema de Depósitos</div>
+                <div class="control-description">
+                    Ative ou desative o sistema de depósitos da plataforma. Quando desativado, os usuários não poderão realizar novos depósitos.
+                </div>
+                
+                <label class="switch">
+                    <input type="checkbox" id="depositToggle" checked>
+                    <span class="slider"></span>
+                </label>
+                <div class="switch-label" id="toggleLabel">Sistema de Depósitos ATIVO</div>
+                
+                <div style="margin-top: 20px; font-size: 12px; color: #888;">
+                    <i class="fas fa-info-circle"></i> Esta configuração afeta todos os usuários
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Authentication Screens -->
+    <div id="authScreens" class="container auth-container">
+        <div class="auth-box">
+            <div class="auth-tabs">
+                <div class="auth-tab active" onclick="showAuthForm('login')">Login</div>
+                <div class="auth-tab" onclick="showAuthForm('register')">Registo</div>
+            </div>
+            
+            <form id="loginForm" class="auth-form active">
+                <h2>Login na Conta</h2>
+                <div class="form-group">
+                    <label for="loginEmail">Email ou Telefone</label>
+                    <input type="text" id="loginEmail" class="form-control" placeholder="seu@email.com ou número" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Senha</label>
+                    <input type="password" id="loginPassword" class="form-control" placeholder="Sua senha" required>
+                </div>
+                <button type="button" class="btn" onclick="login()">Entrar</button>
+            </form>
+            
+            <form id="registerForm" class="auth-form">
+                <h2>Criar Nova Conta</h2>
+                <div class="form-group">
+                    <label for="registerName">Nome Completo</label>
+                    <input type="text" id="registerName" class="form-control" placeholder="Seu nome completo" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" class="form-control" placeholder="seu@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPhone">Telefone</label>
+                    <input type="text" id="registerPhone" class="form-control" placeholder="Insira número" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Senha</label>
+                    <input type="password" id="registerPassword" class="form-control" placeholder="Crie uma senha segura" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirmPassword">Confirmar Senha</label>
+                    <input type="password" id="registerConfirmPassword" class="form-control" placeholder="Confirme sua senha" required>
+                </div>
+                <button type="button" class="btn" onclick="register()">Criar Conta</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Dashboard (hidden by default) -->
+    <div id="mainDashboard" style="display: none;">
+        <header>
+            <div class="container header-content">
+                <div class="logo">
+                    <i class="fas fa-chart-line"></i>
+                    DigitalMoney 
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" onclick="showSection('dashboard')"><i class="fas fa-home"></i> Dashboard</a></li>
+                        <li><a href="#" onclick="showSection('wallet')"><i class="fas fa-wallet"></i> Carteira</a></li>
+                        <li><a href="#" onclick="showSection('mining')"><i class="fas fa-digging"></i> Mineração</a></li>
+                        <li><a href="#" onclick="showSection('history')"><i class="fas fa-history"></i> Histórico</a></li>
+                    </ul>
+                </nav>
+                <div class="user-info">
+                    <span id="userNameDisplay">Usuário</span>
+                    <button class="btn btn-logout" onclick="logout()">Sair</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="container main-content">
+            <div>
+                <!-- Wallet Summary -->
+                <div class="dashboard-section">
+                    <h3 class="section-title"><i class="fas fa-wallet"></i> Saldo da Carteira</h3>
+                    <div class="wallet-balance">
+                        <p>Saldo Disponível</p>
+                        <div class="balance-amount" id="balanceAmount">0,00 MT</div>
+                        <p>Digital Money-Investimento</p>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px; margin-top: 20px;">
+                        <button class="btn" onclick="showSection('deposit')" style="flex: 1;">
+                            <i class="fas fa-money-bill-wave"></i> Depositar
+                        </button>
+                        <button class="btn" onclick="showSection('withdraw')" style="flex: 1; background-color: #ff9500;">
+                            <i class="fas fa-hand-holding-usd"></i> Levantar
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Active Mining -->
+                <div class="dashboard-section">
+                    <h3 class="section-title"><i class="fas fa-hard-hat"></i> Mineração Ativa</h3>
+                    <div id="activeMiningList">
+                        <p style="text-align: center; color: #777; padding: 20px;">
+                            Nenhuma mineração ativa no momento. Escolha um plano para começar!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <!-- Dynamic Content Area -->
+                <div id="dashboardContent">
+                    <!-- Dashboard Home -->
+                    <div id="dashboardHome" class="dashboard-section">
+                        <h2 class="section-title"><i class="fas fa-tachometer-alt"></i> Dashboard</h2>
+                        <p>Bem-vindo à plataforma de investimentos Digital Money</p>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 30px;">
+                            <div style="background: linear-gradient(135deg, #4cd964 0%, #2a8c4a 100%); color: white; padding: 20px; border-radius: 10px;">
+                                <h3>Total Investido</h3>
+                                <p style="font-size: 28px; font-weight: bold;" id="totalInvested">0,00 MT</p>
+                            </div>
+                            <div style="background: linear-gradient(135deg, #007aff 0%, #0050b3 100%); color: white; padding: 20px; border-radius: 10px;">
+                                <h3>Lucro Total</h3>
+                                <p style="font-size: 28px; font-weight: bold;" id="totalProfit">0,00 MT</p>
+                            </div>
+                            <div style="background: linear-gradient(135deg, #ff9500 0%, #cc7700 100%); color: white; padding: 20px; border-radius: 10px;">
+                                <h3>Minerações Ativas</h3>
+                                <p style="font-size: 28px; font-weight: bold;" id="activeMiningCount">0</p>
+                            </div>
+                        </div>
+                        
+                        <h3 style="margin-top: 30px;">Instruções Rápidas</h3>
+                        <ol style="margin-left: 20px; margin-top: 15px;">
+                            <li>Faça um depósito na sua carteira usando Paga Fácil, M-Pesa ou E-mola</li>
+                            <li>Escolha um plano de mineração para começar a ganhar</li>
+                            <li>Acompanhe seus ganhos diários no dashboard</li>
+                            <li>Levante seus lucros quando quiser</li>
+                        </ol>
+                    </div>
+                    
+                    <!-- Wallet Section -->
+                    <div id="walletSection" class="dashboard-section" style="display: none;">
+                        <h2 class="section-title"><i class="fas fa-wallet"></i> Minha Carteira</h2>
+                        
+                        <div style="background-color: #f9f9f9; padding: 20px; border-radius: 10px; margin-bottom: 30px;">
+                            <h3>Informações da Conta</h3>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+                                <div>
+                                    <p><strong>Nome:</strong> <span id="accountName">-</span></p>
+                                    <p><strong>Email:</strong> <span id="accountEmail">-</span></p>
+                                </div>
+                                <div>
+                                    <p><strong>Telefone:</strong> <span id="accountPhone">-</span></p>
+                                    <p><strong>ID de Usuário:</strong> <span id="accountId">-</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3>Vincular Conta para Levantamentos</h3>
+                        <form id="linkAccountForm" style="margin-top: 20px;">
+                            <div class="form-group">
+                                <label>Escolha o método:</label>
+                                <div class="payment-methods">
+                                    <div class="payment-method" onclick="selectPaymentMethod('mpesa')">
+                                        <i class="fas fa-mobile-alt"></i>
+                                        <p>M-Pesa</p>
+                                    </div>
+                                    <div class="payment-method" onclick="selectPaymentMethod('emola')">
+                                        <i class="fas fa-university"></i>
+                                        <p>E-mola</p>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="selectedPaymentMethod" value="">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="accountNumber">Número da Conta/Celular</label>
+                                <input type="text" id="accountNumber" class="form-control" placeholder="Insira número" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="accountNameField">Nome na Conta</label>
+                                <input type="text" id="accountNameField" class="form-control" placeholder="Nome como consta na conta" required>
+                            </div>
+                            
+                            <button type="button" class="btn" onclick="linkAccount()">Vincular Conta</button>
+                        </form>
+                    </div>
+                    
+                    <!-- Deposit Section -->
+                    <div id="depositSection" class="dashboard-section" style="display: none;">
+                        <h2 class="section-title"><i class="fas fa-money-bill-wave"></i> Depositar Fundos</h2>
+                        
+                        <!-- Deposit Disabled Overlay -->
+                        <div id="depositDisabledOverlay" class="deposit-disabled-overlay" style="display: none;">
+                            <div class="deposit-disabled-icon">
+                                <i class="fas fa-pause-circle"></i>
+                            </div>
+                            <div class="deposit-disabled-text">
+                                Sistema de Depósitos Temporariamente Desativado
+                            </div>
+                            <p style="color: #666; margin-top: 10px; text-align: center; max-width: 300px;">
+                                Os depósitos estão temporariamente indisponíveis. Por favor, tente novamente mais tarde.
+                            </p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Escolha o método de depósito:</label>
+                            <div class="payment-methods">
+                                <div class="payment-method active" onclick="selectDepositMethod('pagafacil')">
+                                    <i class="fas fa-qrcode"></i>
+                                    <p>Paga Fácil</p>
+                                </div>
+                                <div class="payment-method" onclick="selectDepositMethod('mpesa')">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <p>M-Pesa</p>
+                                </div>
+                                <div class="payment-method" onclick="selectDepositMethod('emola')">
+                                    <i class="fas fa-university"></i>
+                                    <p>E-mola</p>
+                                </div>
+                            </div>
+                            <input type="hidden" id="selectedDepositMethod" value="pagafacil">
+                        </div>
+                        
+                        <form id="depositForm">
+                            <div class="form-group">
+                                <label for="depositAmount">Valor (MT)</label>
+                                <input type="number" id="depositAmount" class="form-control" min="100" placeholder="Insira o Valor" required>
+                            </div>
+                            
+                            <div id="pagafacilFields">
+                                <div class="form-group">
+                                    <label for="transactionId">ID da Transação Paga Fácil</label>
+                                    <input type="text" id="transactionId" class="form-control" placeholder="ID de transação" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="userNumber">Número do Usuário</label>
+                                    <input type="text" id="userNumber" class="form-control" placeholder="Insira numero" required>
+                                </div>
+                                <p style="color: #777; font-size: 14px; margin-bottom: 20px;">
+                                    <i class="fas fa-info-circle"></i> Para depositar via Paga Fácil, faça o pagamento no terminal e insira os dados da transação acima.
+                                </p>
+                            </div>
+                            
+                            <div id="mpesaFields" style="display: none;">
+                                <div class="form-group">
+                                    <label for="mpesaNumber">Número M-Pesa</label>
+                                    <input type="text" id="mpesaNumber" class="form-control" placeholder="Insira número" required>
+                                </div>
+                                <p style="color: #777; font-size: 14px; margin-bottom: 20px;">
+                                    <i class="fas fa-info-circle"></i> Para depositar via M-Pesa, envie o valor para o número 846678415 e insira seu número acima.
+                                </p>
+                            </div>
+                            
+                            <div id="emolaFields" style="display: none;">
+                                <div class="form-group">
+                                    <label for="emolaNumber">Número E-mola</label>
+                                    <input type="text" id="emolaNumber" class="form-control" placeholder="Insira número" required>
+                                </div>
+                                <p style="color: #777; font-size: 14px; margin-bottom: 20px;">
+                                    <i class="fas fa-info-circle"></i> Para depositar via E-mola, envie o valor para o número 878332095 e insira seu número acima.
+                                </p>
+                            </div>
+                            
+                            <button type="button" class="btn" onclick="processDeposit()" id="depositButton">
+                                Processar Depósito
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <!-- Withdrawal Section -->
+                    <div id="withdrawSection" class="dashboard-section" style="display: none;">
+                        <h2 class="section-title"><i class="fas fa-hand-holding-usd"></i> Levantar Fundos</h2>
+                        
+                        <div id="linkedAccountsInfo" style="background-color: #f9f9f9; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                            <h3>Contas Vinculadas</h3>
+                            <div id="linkedAccountsList">
+                                <p style="color: #777; text-align: center; padding: 10px;">
+                                    Nenhuma conta vinculada. Vá para a seção "Carteira" para vincular uma conta.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <form id="withdrawForm">
+                            <div class="form-group">
+                                <label for="withdrawAmount">Valor para Levantar (MT)</label>
+                                <input type="number" id="withdrawAmount" class="form-control" min="100" placeholder="Ex: 500" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="withdrawMethod">Método de Levantamento</label>
+                                <select id="withdrawMethod" class="form-control" required>
+                                    <option value="">Selecione um método</option>
+                                    <option value="mpesa">M-Pesa</option>
+                                    <option value="emola">E-mola</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="withdrawAccount">Conta para Receber</label>
+                                <select id="withdrawAccount" class="form-control" required>
+                                    <option value="">Selecione uma conta vinculada</option>
+                                </select>
+                            </div>
+                            
+                            <button type="button" class="btn" onclick="processWithdrawal()">Solicitar Levantamento</button>
+                        </form>
+                    </div>
+                    
+                    <!-- Mining Section -->
+                    <div id="miningSection" class="dashboard-section" style="display: none;">
+                        <h2 class="section-title"><i class="fas fa-digging"></i> Máquina de Mineração</h2>
+                        <p style="margin-bottom: 25px;">Escolha um dos nossos planos de mineração para começar a gerar lucros diários.</p>
+                        
+                        <div class="mining-plans" id="miningPlansContainer">
+                            <!-- Mining plans will be inserted here by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <!-- History Section -->
+                    <div id="historySection" class="dashboard-section" style="display: none;">
+                        <h2 class="section-title"><i class="fas fa-history"></i> Histórico de Transações</h2>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <button class="btn" onclick="filterTransactions('all')" style="margin-right: 10px;">Todas</button>
+                            <button class="btn" onclick="filterTransactions('deposit')" style="margin-right: 10px; background-color: #4cd964;">Depósitos</button>
+                            <button class="btn" onclick="filterTransactions('withdrawal')" style="margin-right: 10px; background-color: #ff9500;">Levantamentos</button>
+                            <button class="btn" onclick="filterTransactions('mining')" style="background-color: #007aff;">Mineração</button>
+                        </div>
+                        
+                        <table class="transactions-table">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Tipo</th>
+                                    <th>Descrição</th>
+                                    <th>Valor (MT)</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transactionsList">
+                                <!-- Transactions will be inserted here by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h3>DigitalMoney</h3>
+                        <p>Sua plataforma de investimentos segura e confiável em Moçambique. Comece a investir e veja seu dinheiro crescer.</p>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h3>Links Rápidos</h3>
+                        <ul>
+                            <li><a href="#" onclick="showSection('dashboard')">Dashboard</a></li>
+                            <li><a href="#" onclick="showSection('mining')">Planos de Mineração</a></li>
+                            <li><a href="#" onclick="showSection('wallet')">Minha Carteira</a></li>
+                            <li><a href="#" onclick="showSection('history')">Histórico</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h3>Contactos</h3>
+                        <ul>
+                            <li><i class="fas fa-phone"></i> +258 846678415</li>
+                            <li><i class="fas fa-phone"></i> +258 878332095</li>
+                            <li><i class="fas fa-map-marker-alt"></i> Maputo, Moçambique</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="copyright">
+                    &copy; 2022 DigitalMoney. Todos os direitos reservados.
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Application state
+        let currentUser = null;
+        let users = JSON.parse(localStorage.getItem('investmoz_users')) || [];
+        let transactions = JSON.parse(localStorage.getItem('investmoz_transactions')) || [];
+        let miningPlans = JSON.parse(localStorage.getItem('investmoz_mining_plans')) || [];
+        let activeMinings = JSON.parse(localStorage.getItem('investmoz_active_minings')) || [];
+        let linkedAccounts = JSON.parse(localStorage.getItem('investmoz_linked_accounts')) || [];
+        let depositSystemActive = localStorage.getItem('investmoz_deposit_system') !== 'false'; // Default true
+        
+        // Mining plans data
+        const miningPlansData = [
+            { id: 1, name: "Plano Básico", price: 650, return: 2750, daily: 25, duration: 110, color: "#4cd964" },
+            { id: 2, name: "Plano Prata", price: 1200, return: 5700, daily: 30, duration: 190, color: "#c0c0c0" },
+            { id: 3, name: "Plano Ouro", price: 1800, return: 6300, daily: 45, duration: 140, color: "#ffd700" },
+            { id: 4, name: "Plano Platina", price: 2300, return: 8800, daily: 55, duration: 160, color: "#e5e4e2" },
+            { id: 5, name: "Plano Diamante", price: 3500, return: 10800, daily: 90, duration: 120, color: "#b9f2ff" },
+            { id: 6, name: "Plano VIP", price: 5000, return: 14400, daily: 120, duration: 120, color: "#ff007f" }
+        ];
+        
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is already logged in
+            const savedUser = localStorage.getItem('investmoz_current_user');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showDashboard();
+                updateDashboard();
+            }
+            
+            // Load mining plans if not already loaded
+            if (miningPlans.length === 0) {
+                miningPlans = miningPlansData;
+                localStorage.setItem('investmoz_mining_plans', JSON.stringify(miningPlans));
+            }
+            
+            // Initialize deposit control system
+            initDepositControl();
+            
+            // Render mining plans
+            renderMiningPlans();
+        });
+        
+        // NEW: Deposit Control Functions
+        function initDepositControl() {
+            // Set initial state from localStorage
+            const depositToggle = document.getElementById('depositToggle');
+            depositToggle.checked = depositSystemActive;
+            updateDepositControlUI();
+            
+            // Toggle control panel
+            document.getElementById('controlToggle').addEventListener('click', function() {
+                const panel = document.getElementById('controlPanel');
+                panel.classList.toggle('open');
+                
+                // Update icon animation
+                const icon = this.querySelector('.control-icon i');
+                if (panel.classList.contains('open')) {
+                    icon.className = 'fas fa-chevron-up';
+                    this.style.borderRadius = '20px 20px 0 0';
+                } else {
+                    icon.className = 'fas fa-cogs';
+                    this.style.borderRadius = '50px';
+                }
+            });
+            
+            // Handle deposit toggle change
+            depositToggle.addEventListener('change', function() {
+                depositSystemActive = this.checked;
+                localStorage.setItem('investmoz_deposit_system', depositSystemActive);
+                updateDepositControlUI();
+                
+                // Show notification
+                if (depositSystemActive) {
+                    showNotification('Sistema de depósitos ativado com sucesso!', 'success');
+                } else {
+                    showNotification('Sistema de depósitos desativado. Os usuários não poderão fazer novos depósitos.', 'warning');
+                }
+            });
+        }
+        
+        function updateDepositControlUI() {
+            const statusElement = document.getElementById('controlStatus');
+            const labelElement = document.getElementById('toggleLabel');
+            const toggle = document.getElementById('depositToggle');
+            const controlToggle = document.getElementById('controlToggle');
+            
+            if (depositSystemActive) {
+                statusElement.textContent = 'Ativo';
+                statusElement.style.color = '#4cd964';
+                labelElement.textContent = 'Sistema de Depósitos ATIVO';
+                labelElement.style.color = '#4cd964';
+                
+                // Update control toggle background
+                controlToggle.style.background = 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)';
+                
+                // Update deposit section if visible
+                const depositSection = document.getElementById('depositSection');
+                if (depositSection.style.display !== 'none') {
+                    document.getElementById('depositDisabledOverlay').style.display = 'none';
+                    document.getElementById('depositButton').disabled = false;
+                    document.getElementById('depositButton').style.opacity = '1';
+                }
+            } else {
+                statusElement.textContent = 'Desativado';
+                statusElement.style.color = '#ff3b30';
+                labelElement.textContent = 'Sistema de Depósitos DESATIVADO';
+                labelElement.style.color = '#ff3b30';
+                
+                // Update control toggle background
+                controlToggle.style.background = 'linear-gradient(135deg, #ff3b30 0%, #c70000 100%)';
+                
+                // Update deposit section if visible
+                const depositSection = document.getElementById('depositSection');
+                if (depositSection.style.display !== 'none') {
+                    document.getElementById('depositDisabledOverlay').style.display = 'flex';
+                    document.getElementById('depositButton').disabled = true;
+                    document.getElementById('depositButton').style.opacity = '0.6';
+                }
+            }
+            
+            // Update toggle state
+            toggle.checked = depositSystemActive;
+        }
+        
+        function showNotification(message, type) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center;">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'}" 
+                       style="margin-right: 10px; font-size: 20px; color: ${type === 'success' ? '#4cd964' : '#ff9500'};"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            // Style the notification
+            notification.style.position = 'fixed';
+            notification.style.top = '80px';
+            notification.style.right = '30px';
+            notification.style.background = 'white';
+            notification.style.padding = '15px 20px';
+            notification.style.borderRadius = '8px';
+            notification.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+            notification.style.zIndex = '10000';
+            notification.style.borderLeft = `4px solid ${type === 'success' ? '#4cd964' : '#ff9500'}`;
+            notification.style.maxWidth = '350px';
+            notification.style.animation = 'slideInRight 0.3s ease-out';
+            
+            // Add to body
+            document.body.appendChild(notification);
+            
+            // Remove after 5 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease-out';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 5000);
+            
+            // Add CSS animations if not already present
+            if (!document.querySelector('#notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    @keyframes slideInRight {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    @keyframes slideOutRight {
+                        from { transform: translateX(0); opacity: 1; }
+                        to { transform: translateX(100%); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+        
+        // Modified deposit section show function to check system status
+        const originalShowSection = window.showSection;
+        window.showSection = function(section) {
+            // Call original function
+            if (section === 'deposit') {
+                // Hide all sections
+                document.getElementById('dashboardHome').style.display = 'none';
+                document.getElementById('walletSection').style.display = 'none';
+                document.getElementById('depositSection').style.display = 'block';
+                document.getElementById('withdrawSection').style.display = 'none';
+                document.getElementById('miningSection').style.display = 'none';
+                document.getElementById('historySection').style.display = 'none';
+                
+                // Check deposit system status
+                if (!depositSystemActive) {
+                    document.getElementById('depositDisabledOverlay').style.display = 'flex';
+                    document.getElementById('depositButton').disabled = true;
+                    document.getElementById('depositButton').style.opacity = '0.6';
+                } else {
+                    document.getElementById('depositDisabledOverlay').style.display = 'none';
+                    document.getElementById('depositButton').disabled = false;
+                    document.getElementById('depositButton').style.opacity = '1';
+                }
+            } else {
+                // Call original function for other sections
+                originalShowSection(section);
+            }
+        };
+        
+        // Modified deposit function to check system status
+        const originalProcessDeposit = window.processDeposit;
+        window.processDeposit = function() {
+            if (!depositSystemActive) {
+                alert('O sistema de depósitos está temporariamente desativado. Por favor, tente novamente mais tarde.');
+                return;
+            }
+            
+            // Call original deposit function
+            originalProcessDeposit();
+        };
+        
+        // Authentication functions
+        function showAuthForm(formType) {
+            document.querySelectorAll('.auth-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(form => form.classList.remove('active'));
+            
+            if (formType === 'login') {
+                document.querySelectorAll('.auth-tab')[0].classList.add('active');
+                document.getElementById('loginForm').classList.add('active');
+            } else {
+                document.querySelectorAll('.auth-tab')[1].classList.add('active');
+                document.getElementById('registerForm').classList.add('active');
+            }
+        }
+        
+        function login() {
+            const emailPhone = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            
+            // Simple validation
+            if (!emailPhone || !password) {
+                alert('Por favor, preencha todos os campos.');
+                return;
+            }
+            
+            // Find user
+            const user = users.find(u => 
+                (u.email === emailPhone || u.phone === emailPhone) && 
+                u.password === password
+            );
+            
+            if (user) {
+                currentUser = user;
+                localStorage.setItem('investmoz_current_user', JSON.stringify(user));
+                showDashboard();
+                updateDashboard();
+            } else {
+                alert('Email/telefone ou senha incorretos.');
+            }
+        }
+        
+        function register() {
+            const name = document.getElementById('registerName').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const phone = document.getElementById('registerPhone').value.trim();
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+            
+            // Validation
+            if (!name || !email || !phone || !password || !confirmPassword) {
+                alert('Por favor, preencha todos os campos.');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('As senhas não coincidem.');
+                return;
+            }
+            
+            // Check if user already exists
+            if (users.some(u => u.email === email)) {
+                alert('Este email já está registado.');
+                return;
+            }
+            
+            if (users.some(u => u.phone === phone)) {
+                alert('Este telefone já está registado.');
+                return;
+            }
+            
+            // Create new user
+            const newUser = {
+                id: Date.now(),
+                name,
+                email,
+                phone,
+                password,
+                balance: 0,
+                totalInvested: 0,
+                totalProfit: 0,
+                joinedDate: new Date().toISOString()
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('investmoz_users', JSON.stringify(users));
+            
+            currentUser = newUser;
+            localStorage.setItem('investmoz_current_user', JSON.stringify(newUser));
+            
+            alert('Conta criada com sucesso!');
+            showDashboard();
+            updateDashboard();
+        }
+        
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('investmoz_current_user');
+            
+            document.getElementById('authScreens').style.display = 'flex';
+            document.getElementById('mainDashboard').style.display = 'none';
+            
+            // Clear form fields
+            document.getElementById('loginEmail').value = '';
+            document.getElementById('loginPassword').value = '';
+        }
+        
+        // Dashboard functions
+        function showDashboard() {
+            document.getElementById('authScreens').style.display = 'none';
+            document.getElementById('mainDashboard').style.display = 'block';
+        }
+        
+        // Original showSection function (now wrapped)
+        function showSection(section) {
+            // Hide all sections
+            document.getElementById('dashboardHome').style.display = 'none';
+            document.getElementById('walletSection').style.display = 'none';
+            document.getElementById('depositSection').style.display = 'none';
+            document.getElementById('withdrawSection').style.display = 'none';
+            document.getElementById('miningSection').style.display = 'none';
+            document.getElementById('historySection').style.display = 'none';
+            
+            // Show selected section
+            switch(section) {
+                case 'dashboard':
+                    document.getElementById('dashboardHome').style.display = 'block';
+                    updateDashboardStats();
+                    break;
+                case 'wallet':
+                    document.getElementById('walletSection').style.display = 'block';
+                    updateAccountInfo();
+                    updateLinkedAccounts();
+                    break;
+                case 'deposit':
+                    document.getElementById('depositSection').style.display = 'block';
+                    // Check deposit system status
+                    if (!depositSystemActive) {
+                        document.getElementById('depositDisabledOverlay').style.display = 'flex';
+                        document.getElementById('depositButton').disabled = true;
+                        document.getElementById('depositButton').style.opacity = '0.6';
+                    }
+                    break;
+                case 'withdraw':
+                    document.getElementById('withdrawSection').style.display = 'block';
+                    updateWithdrawAccounts();
+                    break;
+                case 'mining':
+                    document.getElementById('miningSection').style.display = 'block';
+                    break;
+                case 'history':
+                    document.getElementById('historySection').style.display = 'block';
+                    renderTransactions();
+                    break;
+            }
+        }
+        
+        function updateDashboard() {
+            if (!currentUser) return;
+            
+            // Update user info
+            document.getElementById('userNameDisplay').textContent = currentUser.name;
+            document.getElementById('balanceAmount').textContent = formatCurrency(currentUser.balance);
+            
+            // Update active mining list
+            updateActiveMiningList();
+            
+            // Update dashboard stats
+            updateDashboardStats();
+        }
+        
+        function updateDashboardStats() {
+            if (!currentUser) return;
+            
+            // Calculate total invested from active minings
+            let totalInvested = 0;
+            let activeMiningCount = 0;
+            
+            const userMinings = activeMinings.filter(m => m.userId === currentUser.id);
+            activeMiningCount = userMinings.length;
+            
+            userMinings.forEach(mining => {
+                totalInvested += mining.investedAmount;
+            });
+            
+            document.getElementById('totalInvested').textContent = formatCurrency(totalInvested);
+            document.getElementById('totalProfit').textContent = formatCurrency(currentUser.totalProfit || 0);
+            document.getElementById('activeMiningCount').textContent = activeMiningCount;
+        }
+        
+        function updateAccountInfo() {
+            if (!currentUser) return;
+            
+            document.getElementById('accountName').textContent = currentUser.name;
+            document.getElementById('accountEmail').textContent = currentUser.email;
+            document.getElementById('accountPhone').textContent = currentUser.phone;
+            document.getElementById('accountId').textContent = currentUser.id;
+        }
+        
+        // Payment methods
+        function selectPaymentMethod(method) {
+            document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('active'));
+            event.target.closest('.payment-method').classList.add('active');
+            document.getElementById('selectedPaymentMethod').value = method;
+        }
+        
+        function selectDepositMethod(method) {
+            document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('active'));
+            event.target.closest('.payment-method').classList.add('active');
+            document.getElementById('selectedDepositMethod').value = method;
+            
+            // Show/hide appropriate fields
+            document.getElementById('pagafacilFields').style.display = method === 'pagafacil' ? 'block' : 'none';
+            document.getElementById('mpesaFields').style.display = method === 'mpesa' ? 'block' : 'none';
+            document.getElementById('emolaFields').style.display = method === 'emola' ? 'block' : 'none';
+        }
+        
+        // Deposit function
+        function processDeposit() {
+            if (!currentUser) return;
+            
+            const amount = parseFloat(document.getElementById('depositAmount').value);
+            const method = document.getElementById('selectedDepositMethod').value;
+            
+            if (!amount || amount < 100) {
+                alert('O valor mínimo de depósito é de 100 MT.');
+                return;
+            }
+            
+            let transactionId = '';
+            let userNumber = '';
+            
+            if (method === 'pagafacil') {
+                transactionId = document.getElementById('transactionId').value.trim();
+                userNumber = document.getElementById('userNumber').value.trim();
+                
+                if (!transactionId || !userNumber) {
+                    alert('Por favor, preencha todos os campos do Paga Fácil.');
+                    return;
+                }
+            } else if (method === 'mpesa') {
+                userNumber = document.getElementById('mpesaNumber').value.trim();
+                
+                if (!userNumber) {
+                    alert('Por favor, insira seu número M-Pesa.');
+                    return;
+                }
+            } else if (method === 'emola') {
+                userNumber = document.getElementById('emolaNumber').value.trim();
+                
+                if (!userNumber) {
+                    alert('Por favor, insira seu número E-mola.');
+                    return;
+                }
+            }
+            
+            // Update user balance
+            currentUser.balance += amount;
+            
+            // Create transaction record
+            const transaction = {
+                id: Date.now(),
+                userId: currentUser.id,
+                type: 'deposit',
+                method: method,
+                amount: amount,
+                description: `Depósito via ${method.toUpperCase()}`,
+                status: 'completed',
+                date: new Date().toISOString(),
+                details: {
+                    transactionId: transactionId,
+                    userNumber: userNumber
+                }
+            };
+            
+            transactions.push(transaction);
+            
+            // Update localStorage
+            updateUserData();
+            localStorage.setItem('investmoz_transactions', JSON.stringify(transactions));
+            
+            alert(`Depósito de ${formatCurrency(amount)} processado com sucesso!`);
+            
+            // Reset form
+            document.getElementById('depositForm').reset();
+            
+            // Update dashboard
+            updateDashboard();
+            showSection('dashboard');
+        }
+        
+        // Link account for withdrawals
+        function linkAccount() {
+            if (!currentUser) return;
+            
+            const method = document.getElementById('selectedPaymentMethod').value;
+            const accountNumber = document.getElementById('accountNumber').value.trim();
+            const accountName = document.getElementById('accountNameField').value.trim();
+            
+            if (!method || !accountNumber || !accountName) {
+                alert('Por favor, preencha todos os campos.');
+                return;
+            }
+            
+            // Check if account already linked
+            const existingAccount = linkedAccounts.find(acc => 
+                acc.userId === currentUser.id && acc.method === method && acc.accountNumber === accountNumber
+            );
+            
+            if (existingAccount) {
+                alert('Esta conta já está vinculada.');
+                return;
+            }
+            
+            // Link new account
+            const linkedAccount = {
+                id: Date.now(),
+                userId: currentUser.id,
+                method: method,
+                accountNumber: accountNumber,
+                accountName: accountName,
+                linkedDate: new Date().toISOString()
+            };
+            
+            linkedAccounts.push(linkedAccount);
+            localStorage.setItem('investmoz_linked_accounts', JSON.stringify(linkedAccounts));
+            
+            alert('Conta vinculada com sucesso!');
+            
+            // Reset form
+            document.getElementById('linkAccountForm').reset();
+            
+            // Update UI
+            updateLinkedAccounts();
+            updateWithdrawAccounts();
+        }
+        
+        function updateLinkedAccounts() {
+            if (!currentUser) return;
+            
+            const userAccounts = linkedAccounts.filter(acc => acc.userId === currentUser.id);
+            const accountsList = document.getElementById('linkedAccountsList');
+            
+            if (userAccounts.length === 0) {
+                accountsList.innerHTML = '<p style="color: #777; text-align: center; padding: 10px;">Nenhuma conta vinculada. Vá para a seção "Carteira" para vincular uma conta.</p>';
+                return;
+            }
+            
+            let html = '';
+            userAccounts.forEach(account => {
+                html += `
+                    <div style="background-color: white; padding: 15px; border-radius: 5px; margin-bottom: 10px; border-left: 4px solid #2a5298;">
+                        <p><strong>${account.method.toUpperCase()}</strong></p>
+                        <p>Conta: ${account.accountNumber}</p>
+                        <p>Nome: ${account.accountName}</p>
+                        <p style="color: #777; font-size: 12px;">Vinculada em: ${formatDate(account.linkedDate)}</p>
+                    </div>
+                `;
+            });
+            
+            accountsList.innerHTML = html;
+        }
+        
+        function updateWithdrawAccounts() {
+            if (!currentUser) return;
+            
+            const userAccounts = linkedAccounts.filter(acc => acc.userId === currentUser.id);
+            const selectElement = document.getElementById('withdrawAccount');
+            
+            // Clear existing options except the first one
+            while (selectElement.options.length > 1) {
+                selectElement.remove(1);
+            }
+            
+            // Add user's linked accounts
+            userAccounts.forEach(account => {
+                const option = document.createElement('option');
+                option.value = account.id;
+                option.textContent = `${account.method.toUpperCase()} - ${account.accountNumber} (${account.accountName})`;
+                selectElement.appendChild(option);
+            });
+        }
+        
+        // Withdrawal function
+        function processWithdrawal() {
+            if (!currentUser) return;
+            
+            const amount = parseFloat(document.getElementById('withdrawAmount').value);
+            const method = document.getElementById('withdrawMethod').value;
+            const accountId = parseInt(document.getElementById('withdrawAccount').value);
+            
+            if (!amount || amount < 100) {
+                alert('O valor mínimo para levantamento é de 100 MT.');
+                return;
+            }
+            
+            if (!method) {
+                alert('Por favor, selecione um método de levantamento.');
+                return;
+            }
+            
+            if (!accountId) {
+                alert('Por favor, selecione uma conta vinculada.');
+                return;
+            }
+            
+            // Check if user has sufficient balance
+            if (currentUser.balance < amount) {
+                alert('Saldo insuficiente para realizar este levantamento.');
+                return;
+            }
+            
+            // Find the linked account
+            const linkedAccount = linkedAccounts.find(acc => acc.id === accountId);
+            
+            if (!linkedAccount) {
+                alert('Conta selecionada não encontrada.');
+                return;
+            }
+            
+            // Update user balance
+            currentUser.balance -= amount;
+            
+            // Create transaction record
+            const transaction = {
+                id: Date.now(),
+                userId: currentUser.id,
+                type: 'withdrawal',
+                method: method,
+                amount: amount,
+                description: `Levantamento para ${linkedAccount.method.toUpperCase()} - ${linkedAccount.accountNumber}`,
+                status: 'pending',
+                date: new Date().toISOString(),
+                details: {
+                    accountId: accountId,
+                    accountNumber: linkedAccount.accountNumber,
+                    accountName: linkedAccount.accountName
+                }
+            };
+            
+            transactions.push(transaction);
+            
+            // Update localStorage
+            updateUserData();
+            localStorage.setItem('investmoz_transactions', JSON.stringify(transactions));
+            
+            alert(`Pedido de levantamento de ${formatCurrency(amount)} enviado com sucesso! Será processado dentro de 24 horas.`);
+            
+            // Reset form
+            document.getElementById('withdrawForm').reset();
+            
+            // Update dashboard
+            updateDashboard();
+            showSection('dashboard');
+        }
+        
+        // Mining functions
+        function renderMiningPlans() {
+            const container = document.getElementById('miningPlansContainer');
+            let html = '';
+            
+            miningPlans.forEach(plan => {
+                html += `
+                    <div class="plan-card">
+                        <div class="plan-header">
+                            <h3>${plan.name}</h3>
+                            <div class="plan-price">${formatCurrency(plan.price)}</div>
+                            <p>Investimento Inicial</p>
+                        </div>
+                        
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> Retorno Total: ${formatCurrency(plan.return)}</li>
+                            <li><i class="fas fa-check-circle"></i> Ganho Diário: ${formatCurrency(plan.daily)}</li>
+                            <li><i class="fas fa-check-circle"></i> Duração: ${plan.duration} dias</li>
+                            <li><i class="fas fa-check-circle"></i> Pagamento Diário Automático</li>
+                        </ul>
+                        
+                        <button class="btn" onclick="activateMiningPlan(${plan.id})" style="width: 100%; background-color: ${plan.color}">
+                            <i class="fas fa-play-circle"></i> Ativar Plano
+                        </button>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        function activateMiningPlan(planId) {
+            if (!currentUser) return;
+            
+            const plan = miningPlans.find(p => p.id === planId);
+            
+            if (!plan) {
+                alert('Plano não encontrado.');
+                return;
+            }
+            
+            // Check if user has sufficient balance
+            if (currentUser.balance < plan.price) {
+                alert('Saldo insuficiente para ativar este plano. Faça um depósito primeiro.');
+                showSection('deposit');
+                return;
+            }
+            
+            // Check if user already has this plan active
+            const existingMining = activeMinings.find(m => 
+                m.userId === currentUser.id && 
+                m.planId === planId && 
+                m.status === 'active'
+            );
+            
+            if (existingMining) {
+                alert('Você já tem este plano ativo.');
+                return;
+            }
+            
+            // Confirm activation
+            if (!confirm(`Deseja ativar o ${plan.name} por ${formatCurrency(plan.price)}?`)) {
+                return;
+            }
+            
+            // Deduct from balance
+            currentUser.balance -= plan.price;
+            currentUser.totalInvested = (currentUser.totalInvested || 0) + plan.price;
+            
+            // Create active mining record
+            const mining = {
+                id: Date.now(),
+                userId: currentUser.id,
+                planId: plan.id,
+                planName: plan.name,
+                investedAmount: plan.price,
+                dailyProfit: plan.daily,
+                totalReturn: plan.return,
+                duration: plan.duration,
+                startDate: new Date().toISOString(),
+                endDate: new Date(Date.now() + plan.duration * 24 * 60 * 60 * 1000).toISOString(),
+                status: 'active',
+                lastPayoutDate: new Date().toISOString()
+            };
+            
+            activeMinings.push(mining);
+            
+            // Create transaction record
+            const transaction = {
+                id: Date.now(),
+                userId: currentUser.id,
+                type: 'mining',
+                amount: -plan.price,
+                description: `Ativação do ${plan.name}`,
+                status: 'completed',
+                date: new Date().toISOString(),
+                details: {
+                    planId: plan.id,
+                    planName: plan.name
+                }
+            };
+            
+            transactions.push(transaction);
+            
+            // Update localStorage
+            updateUserData();
+            localStorage.setItem('investmoz_active_minings', JSON.stringify(activeMinings));
+            localStorage.setItem('investmoz_transactions', JSON.stringify(transactions));
+            
+            alert(`Plano ${plan.name} ativado com sucesso! Você começará a receber ${formatCurrency(plan.daily)} diariamente.`);
+            
+            // Update dashboard
+            updateDashboard();
+            showSection('dashboard');
+        }
+        
+        function updateActiveMiningList() {
+            if (!currentUser) return;
+            
+            const userMinings = activeMinings.filter(m => m.userId === currentUser.id && m.status === 'active');
+            const container = document.getElementById('activeMiningList');
+            
+            if (userMinings.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #777; padding: 20px;">Nenhuma mineração ativa no momento. Escolha um plano para começar!</p>';
+                return;
+            }
+            
+            let html = '';
+            userMinings.forEach(mining => {
+                const daysLeft = Math.ceil((new Date(mining.endDate) - new Date()) / (1000 * 60 * 60 * 24));
+                const totalEarned = mining.dailyProfit * Math.min(mining.duration - daysLeft, mining.duration);
+                
+                html += `
+                    <div style="background-color: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #2a5298;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h4 style="margin: 0;">${mining.planName}</h4>
+                            <span class="status completed">Ativo</span>
+                        </div>
+                        <p style="margin: 10px 0;"><strong>Investido:</strong> ${formatCurrency(mining.investedAmount)}</p>
+                        <p style="margin: 10px 0;"><strong>Ganho Diário:</strong> ${formatCurrency(mining.dailyProfit)}</p>
+                        <p style="margin: 10px 0;"><strong>Total Ganho:</strong> ${formatCurrency(totalEarned)} / ${formatCurrency(mining.totalReturn)}</p>
+                        <p style="margin: 10px 0;"><strong>Dias Restantes:</strong> ${daysLeft > 0 ? daysLeft : 0} dias</p>
+                        <div style="background-color: #eee; height: 8px; border-radius: 4px; margin-top: 10px;">
+                            <div style="background-color: #4cd964; height: 100%; width: ${((mining.duration - daysLeft) / mining.duration) * 100}%; border-radius: 4px;"></div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            
+            // Simulate daily mining profits (for demo purposes)
+            simulateMiningPayouts();
+        }
+        
+        function simulateMiningPayouts() {
+            if (!currentUser) return;
+            
+            const userMinings = activeMinings.filter(m => m.userId === currentUser.id && m.status === 'active');
+            const now = new Date();
+            const today = now.toDateString();
+            
+            userMinings.forEach(mining => {
+                const lastPayout = new Date(mining.lastPayoutDate).toDateString();
+                
+                // If last payout was not today, add daily profit
+                if (lastPayout !== today && now > new Date(mining.lastPayoutDate)) {
+                    // Update user balance
+                    currentUser.balance += mining.dailyProfit;
+                    currentUser.totalProfit = (currentUser.totalProfit || 0) + mining.dailyProfit;
+                    
+                    // Update mining last payout date
+                    mining.lastPayoutDate = now.toISOString();
+                    
+                    // Create transaction record
+                    const transaction = {
+                        id: Date.now(),
+                        userId: currentUser.id,
+                        type: 'mining',
+                        amount: mining.dailyProfit,
+                        description: `Ganho diário do ${mining.planName}`,
+                        status: 'completed',
+                        date: now.toISOString(),
+                        details: {
+                            planId: mining.planId,
+                            planName: mining.planName
+                        }
+                    };
+                    
+                    transactions.push(transaction);
+                    
+                    // Check if mining period has ended
+                    if (now >= new Date(mining.endDate)) {
+                        mining.status = 'completed';
+                    }
+                }
+            });
+            
+            // Update localStorage
+            if (userMinings.length > 0) {
+                updateUserData();
+                localStorage.setItem('investmoz_active_minings', JSON.stringify(activeMinings));
+                localStorage.setItem('investmoz_transactions', JSON.stringify(transactions));
+            }
+        }
+        
+        // Transactions functions
+        function renderTransactions() {
+            if (!currentUser) return;
+            
+            const userTransactions = transactions.filter(t => t.userId === currentUser.id);
+            const container = document.getElementById('transactionsList');
+            
+            if (userTransactions.length === 0) {
+                container.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 40px; color: #777;">
+                            Nenhuma transação encontrada.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            // Sort by date (newest first)
+            userTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            let html = '';
+            userTransactions.forEach(transaction => {
+                const isPositive = transaction.amount > 0;
+                const amountClass = isPositive ? 'completed' : 'pending';
+                const amountSign = isPositive ? '+' : '';
+                
+                html += `
+                    <tr>
+                        <td>${formatDate(transaction.date)}</td>
+                        <td>${getTransactionTypeLabel(transaction.type)}</td>
+                        <td>${transaction.description}</td>
+                        <td><span class="status ${amountClass}">${amountSign}${formatCurrency(transaction.amount)}</span></td>
+                        <td><span class="status ${transaction.status}">${getStatusLabel(transaction.status)}</span></td>
+                    </tr>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        function filterTransactions(type) {
+            if (!currentUser) return;
+            
+            const userTransactions = transactions.filter(t => t.userId === currentUser.id);
+            const container = document.getElementById('transactionsList');
+            
+            let filteredTransactions = userTransactions;
+            if (type !== 'all') {
+                filteredTransactions = userTransactions.filter(t => t.type === type);
+            }
+            
+            // Sort by date (newest first)
+            filteredTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            let html = '';
+            filteredTransactions.forEach(transaction => {
+                const isPositive = transaction.amount > 0;
+                const amountClass = isPositive ? 'completed' : 'pending';
+                const amountSign = isPositive ? '+' : '';
+                
+                html += `
+                    <tr>
+                        <td>${formatDate(transaction.date)}</td>
+                        <td>${getTransactionTypeLabel(transaction.type)}</td>
+                        <td>${transaction.description}</td>
+                        <td><span class="status ${amountClass}">${amountSign}${formatCurrency(transaction.amount)}</span></td>
+                        <td><span class="status ${transaction.status}">${getStatusLabel(transaction.status)}</span></td>
+                    </tr>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // Utility functions
+        function updateUserData() {
+            // Update user in users array
+            const userIndex = users.findIndex(u => u.id === currentUser.id);
+            if (userIndex !== -1) {
+                users[userIndex] = currentUser;
+            }
+            
+            // Update localStorage
+            localStorage.setItem('investmoz_users', JSON.stringify(users));
+            localStorage.setItem('investmoz_current_user', JSON.stringify(currentUser));
+        }
+        
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('pt-MZ', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(amount) + ' MT';
+        }
+        
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('pt-MZ') + ' ' + date.toLocaleTimeString('pt-MZ', {hour: '2-digit', minute: '2-digit'});
+        }
+        
+        function getTransactionTypeLabel(type) {
+            const labels = {
+                'deposit': 'Depósito',
+                'withdrawal': 'Levantamento',
+                'mining': 'Mineração'
+            };
+            return labels[type] || type;
+        }
+        
+        function getStatusLabel(status) {
+            const labels = {
+                'completed': 'Concluído',
+                'pending': 'Pendente',
+                'active': 'Ativo'
+            };
+            return labels[status] || status;
+        }
+    </script>
+</body>
+</html>
