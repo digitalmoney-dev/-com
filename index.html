@@ -777,7 +777,7 @@
         }
         
         .referral-code::after {
-            content: '📋';
+            content: '';
             position: absolute;
             top: 50%;
             right: -30px;
@@ -2569,7 +2569,7 @@
             
             const amount = parseFloat(document.getElementById('depositAmount').value);
             
-            if (!amount || amount < 655824524821) {
+            if (!amount || amount < 850) {
                 alert('O valor mínimo de depósito é de 850 MT.');
                 return;
             }
