@@ -777,7 +777,7 @@
         }
         
         .referral-code::after {
-            content: '';
+            content: '📋';
             position: absolute;
             top: 50%;
             right: -30px;
@@ -1270,43 +1270,6 @@
             font-size: 14px;
         }
         
-        /* Loading animation */
-        .loading {
-            display: inline-block;
-            position: relative;
-            width: 80px;
-            height: 80px;
-        }
-        
-        .loading div {
-            position: absolute;
-            border: 4px solid #1e3c72;
-            opacity: 1;
-            border-radius: 50%;
-            animation: loading 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
-        }
-        
-        .loading div:nth-child(2) {
-            animation-delay: -0.5s;
-        }
-        
-        @keyframes loading {
-            0% {
-                top: 36px;
-                left: 36px;
-                width: 0;
-                height: 0;
-                opacity: 1;
-            }
-            100% {
-                top: 0px;
-                left: 0px;
-                width: 72px;
-                height: 72px;
-                opacity: 0;
-            }
-        }
-        
         /* Responsive */
         @media (max-width: 992px) {
             .main-content {
@@ -1573,7 +1536,7 @@
                         
                         <h3 style="margin-top: 30px;">Instruções Rápidas</h3>
                         <ol style="margin-left: 20px; margin-top: 15px;">
-                            <li>Faça um depósito na sua carteira usando <strong>Paga Fácil</strong></li>
+                            <li>Faça um depósito na sua carteira usando <strong>Carteira Móvel</strong></li>
                             <li>Escolha um plano de mineração para começar a ganhar</li>
                             <li>Convide amigos com seu código e ganhe 10% dos investimentos deles</li>
                             <li>Acompanhe seus ganhos diários no dashboard</li>
@@ -1661,12 +1624,12 @@
                         <form id="depositForm">
                             <div class="form-group">
                                 <label for="depositAmount">Valor (MT)</label>
-                                <input type="number" id="depositAmount" class="form-control" min="100" placeholder="Insira o Valor" required>
+                                <input type="number" id="depositAmount" class="form-control" min="850" placeholder="Mínimo: 850 MT" required>
                             </div>
                             
                             <div id="pagafacilFields">
                                 <div class="form-group">
-                                    <label for="transactionId">ID de Transação</label>
+                                    <label for="transactionId">ID da Transação</label>
                                     <input type="text" id="transactionId" class="form-control" placeholder="ID de transação" required>
                                 </div>
                                 <div class="form-group">
@@ -1674,7 +1637,7 @@
                                     <input type="text" id="userNumber" class="form-control" placeholder="Insira numero" required>
                                 </div>
                                 <p style="color: #777; font-size: 14px; margin-bottom: 20px;">
-                                    <i class="fas fa-info-circle"></i> Para depositar via carteira movel, faça o pagamento no terminal e insira os dados da transação acima.
+                                    <i class="fas fa-info-circle"></i> Para depositar via Carteira Móvel, faça o pagamento no terminal e insira os dados da transação acima.
                                 </p>
                             </div>
                             
@@ -1700,7 +1663,7 @@
                         <form id="withdrawForm">
                             <div class="form-group">
                                 <label for="withdrawAmount">Valor para Levantar (MT)</label>
-                                <input type="number" id="withdrawAmount" class="form-control" min="100" placeholder="Insira o valor" required>
+                                <input type="number" id="withdrawAmount" class="form-control" min="100" placeholder="Insira valor" required>
                             </div>
                             
                             <div class="form-group">
@@ -1726,7 +1689,7 @@
                     <!-- Mining Section -->
                     <div id="miningSection" class="dashboard-section" style="display: none;">
                         <h2 class="section-title"><i class="fas fa-digging"></i> Máquina de Mineração</h2>
-                        <p style="margin-bottom: 25px;">Escolha um dos nossos planos de mineração para começar a gerar lucros diários.</p>
+                        <p style="margin-bottom: 25px;">Escolha um dos nossos planos de mineração para começar a gerar lucros diários automaticamente na sua carteira.</p>
                         
                         <div class="mining-plans" id="miningPlansContainer">
                             <!-- Mining plans will be inserted here by JavaScript -->
@@ -1752,14 +1715,14 @@
                                         <i class="fas fa-money-bill-wave" style="font-size: 24px;"></i>
                                     </div>
                                     <h4>2. Eles Investem</h4>
-                                    <p>Seus convidados registam-se e investem via Carteira Móvel</p>
+                                    <p>Seus convidados registam-se e investem via Paga Fácil</p>
                                 </div>
                                 <div style="text-align: center;">
                                     <div style="width: 60px; height: 60px; background: rgba(255, 255, 255, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
                                         <i class="fas fa-coins" style="font-size: 24px;"></i>
                                     </div>
                                     <h4>3. Ganhe Comissão</h4>
-                                    <p>Receba 10% do valor que investirem</p>
+                                    <p>Receba 10% do valor que investirem na sua carteira</p>
                                 </div>
                             </div>
                         </div>
@@ -1864,14 +1827,68 @@
         let commissions = JSON.parse(localStorage.getItem('investmoz_commissions')) || [];
         let depositSystemActive = localStorage.getItem('investmoz_deposit_system') !== 'false'; // Default true
         
-        // Mining plans data
+        // NOVOS PLANOS DE MINERAÇÃO (substituindo os antigos)
         const miningPlansData = [
-            { id: 1, name: "Plano Básico", price: 650, return: 2750, daily: 25, duration: 110, color: "#4cd964" },
-            { id: 2, name: "Plano Prata", price: 1200, return: 5700, daily: 30, duration: 190, color: "#c0c0c0" },
-            { id: 3, name: "Plano Ouro", price: 1800, return: 6300, daily: 45, duration: 140, color: "#ffd700" },
-            { id: 4, name: "Plano Platina", price: 2300, return: 8800, daily: 55, duration: 160, color: "#e5e4e2" },
-            { id: 5, name: "Plano Diamante", price: 3500, return: 10800, daily: 90, duration: 120, color: "#b9f2ff" },
-            { id: 6, name: "Plano VIP", price: 5000, return: 14400, daily: 120, duration: 120, color: "#ff007f" }
+            { 
+                id: 1, 
+                name: "Plano Bronze", 
+                price: 850, 
+                return: 2945, 
+                daily: 95, 
+                duration: 31, // 1 mês (31 dias)
+                color: "#cd7f32",
+                description: "Retorno de 2945 MT em 1 mês"
+            },
+            { 
+                id: 2, 
+                name: "Plano Prata", 
+                price: 1700, 
+                return: 7750, 
+                daily: 125, 
+                duration: 62, // 2 meses (62 dias)
+                color: "#c0c0c0",
+                description: "Retorno de 7750 MT em 2 meses"
+            },
+            { 
+                id: 3, 
+                name: "Plano Ouro", 
+                price: 2800, 
+                return: 10230, 
+                daily: 165, 
+                duration: 62, // 2 meses (62 dias)
+                color: "#ffd700",
+                description: "Retorno de 10230 MT em 2 meses"
+            },
+            { 
+                id: 4, 
+                name: "Plano Platina", 
+                price: 3500, 
+                return: 12400, 
+                daily: 200, 
+                duration: 62, // 2 meses (62 dias)
+                color: "#e5e4e2",
+                description: "Retorno de 12400 MT em 2 meses"
+            },
+            { 
+                id: 5, 
+                name: "Plano Diamante", 
+                price: 4700, 
+                return: 16120, 
+                daily: 260, 
+                duration: 62, // 2 meses (62 dias)
+                color: "#b9f2ff",
+                description: "Retorno de 16120 MT em 2 meses"
+            },
+            { 
+                id: 6, 
+                name: "Plano VIP", 
+                price: 7000, 
+                return: 21700, 
+                daily: 350, 
+                duration: 62, // 2 meses (62 dias)
+                color: "#ff007f",
+                description: "Retorno de 21700 MT em 2 meses"
+            }
         ];
         
         // Initialize app
@@ -1886,6 +1903,10 @@
             
             // Load mining plans if not already loaded
             if (miningPlans.length === 0) {
+                miningPlans = miningPlansData;
+                localStorage.setItem('investmoz_mining_plans', JSON.stringify(miningPlans));
+            } else {
+                // Update existing plans with new data
                 miningPlans = miningPlansData;
                 localStorage.setItem('investmoz_mining_plans', JSON.stringify(miningPlans));
             }
@@ -2034,23 +2055,6 @@
                     }
                 }, 300);
             }, 5000);
-            
-            // Add CSS animations if not already present
-            if (!document.querySelector('#notification-styles')) {
-                const style = document.createElement('style');
-                style.id = 'notification-styles';
-                style.textContent = `
-                    @keyframes slideInRight {
-                        from { transform: translateX(100%); opacity: 0; }
-                        to { transform: translateX(0); opacity: 1; }
-                    }
-                    @keyframes slideOutRight {
-                        from { transform: translateX(0); opacity: 1; }
-                        to { transform: translateX(100%); opacity: 0; }
-                    }
-                `;
-                document.head.appendChild(style);
-            }
         }
         
         // Modified deposit section show function to check system status
@@ -2277,7 +2281,7 @@
             
             commissions.push(commission);
             
-            // Add commission to referrer's balance
+            // Add commission to referrer's balance - CAI NA CARTEIRA DO SALDO
             currentUser.balance += commissionAmount;
             currentUser.totalProfit = (currentUser.totalProfit || 0) + commissionAmount;
             
@@ -2559,14 +2563,14 @@
             document.getElementById('selectedPaymentMethod').value = method;
         }
         
-        // Deposit function - SIMPLIFICADA (apenas Paga Fácil)
+        // Deposit function - ATUALIZADO com valor mínimo de 850 MT
         function processDeposit() {
             if (!currentUser) return;
             
             const amount = parseFloat(document.getElementById('depositAmount').value);
             
-            if (!amount || amount < 658545525) {
-                alert('O valor mínimo de depósito é de 100 MT.');
+            if (!amount || amount < 655824524821) {
+                alert('O valor mínimo de depósito é de 850 MT.');
                 return;
             }
             
@@ -2713,8 +2717,8 @@
             const method = document.getElementById('withdrawMethod').value;
             const accountId = parseInt(document.getElementById('withdrawAccount').value);
             
-            if (!amount || amount < 100) {
-                alert('O valor mínimo para levantamento é de 100 MT.');
+            if (!amount || amount < 200) {
+                alert('O valor mínimo para levantamento é de 200 MT.');
                 return;
             }
             
@@ -2778,7 +2782,7 @@
             showSection('dashboard');
         }
         
-        // Mining functions
+        // Mining functions - ATUALIZADOS com novos planos
         function renderMiningPlans() {
             const container = document.getElementById('miningPlansContainer');
             let html = '';
@@ -2796,7 +2800,8 @@
                             <li><i class="fas fa-check-circle"></i> Retorno Total: ${formatCurrency(plan.return)}</li>
                             <li><i class="fas fa-check-circle"></i> Ganho Diário: ${formatCurrency(plan.daily)}</li>
                             <li><i class="fas fa-check-circle"></i> Duração: ${plan.duration} dias</li>
-                            <li><i class="fas fa-check-circle"></i> Pagamento Diário Automático</li>
+                            <li><i class="fas fa-check-circle"></i> Pagamento Automático Diário</li>
+                            <li><i class="fas fa-check-circle"></i> ${plan.description}</li>
                         </ul>
                         
                         <button class="btn" onclick="activateMiningPlan(${plan.id})" style="width: 100%; background-color: ${plan.color}">
@@ -2839,7 +2844,7 @@
             }
             
             // Confirm activation
-            if (!confirm(`Deseja ativar o ${plan.name} por ${formatCurrency(plan.price)}?`)) {
+            if (!confirm(`Deseja ativar o ${plan.name} por ${formatCurrency(plan.price)}?\n\nVocê receberá ${formatCurrency(plan.daily)} diariamente durante ${plan.duration} dias.\nTotal a receber: ${formatCurrency(plan.return)}`)) {
                 return;
             }
             
@@ -2860,7 +2865,8 @@
                 startDate: new Date().toISOString(),
                 endDate: new Date(Date.now() + plan.duration * 24 * 60 * 60 * 1000).toISOString(),
                 status: 'active',
-                lastPayoutDate: new Date().toISOString()
+                lastPayoutDate: new Date().toISOString(),
+                totalEarned: 0
             };
             
             activeMinings.push(mining);
@@ -2882,7 +2888,7 @@
             
             transactions.push(transaction);
             
-            // NEW: Process referral commission if applicable
+            // NEW: Process referral commission if applicable - COMISSÃO CAI NA CARTEIRA
             processReferralCommissionForInvestment(plan.price);
             
             // Update localStorage
@@ -2890,7 +2896,7 @@
             localStorage.setItem('investmoz_active_minings', JSON.stringify(activeMinings));
             localStorage.setItem('investmoz_transactions', JSON.stringify(transactions));
             
-            alert(`Plano ${plan.name} ativado com sucesso! Você começará a receber ${formatCurrency(plan.daily)} diariamente.`);
+            alert(`Plano ${plan.name} ativado com sucesso!\n\nA partir de amanhã você começará a receber ${formatCurrency(plan.daily)} diariamente na sua carteira.\n\nTotal a receber em ${plan.duration} dias: ${formatCurrency(plan.return)}`);
             
             // Update dashboard
             updateDashboard();
@@ -2904,7 +2910,7 @@
             // Find if this user was referred by someone
             const referral = referrals.find(r => r.referredUserId === currentUser.id);
             if (referral) {
-                // Process commission for the referrer
+                // Process commission for the referrer - COMISSÃO CAI NA CARTEIRA DO REFERENTE
                 processReferralCommission(currentUser.id, investmentAmount);
             }
         }
@@ -2923,7 +2929,8 @@
             let html = '';
             userMinings.forEach(mining => {
                 const daysLeft = Math.ceil((new Date(mining.endDate) - new Date()) / (1000 * 60 * 60 * 24));
-                const totalEarned = mining.dailyProfit * Math.min(mining.duration - daysLeft, mining.duration);
+                const daysPassed = mining.duration - daysLeft;
+                const totalEarned = mining.dailyProfit * daysPassed;
                 
                 html += `
                     <div style="background-color: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #2a5298;">
@@ -2958,11 +2965,14 @@
             userMinings.forEach(mining => {
                 const lastPayout = new Date(mining.lastPayoutDate).toDateString();
                 
-                // If last payout was not today, add daily profit
+                // If last payout was not today, add daily profit - CAI NA CARTEIRA
                 if (lastPayout !== today && now > new Date(mining.lastPayoutDate)) {
-                    // Update user balance
+                    // Update user balance - GANHO DIÁRIO CAI NA CARTEIRA
                     currentUser.balance += mining.dailyProfit;
                     currentUser.totalProfit = (currentUser.totalProfit || 0) + mining.dailyProfit;
+                    
+                    // Update mining total earned
+                    mining.totalEarned = (mining.totalEarned || 0) + mining.dailyProfit;
                     
                     // Update mining last payout date
                     mining.lastPayoutDate = now.toISOString();
@@ -2987,6 +2997,7 @@
                     // Check if mining period has ended
                     if (now >= new Date(mining.endDate)) {
                         mining.status = 'completed';
+                        showNotification(`Seu plano ${mining.planName} foi concluído! Você recebeu um total de ${formatCurrency(mining.totalReturn)}.`, 'success');
                     }
                 }
             });
